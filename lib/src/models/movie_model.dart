@@ -74,4 +74,13 @@ class Movie {
     return 'https://image.tmdb.org/t/p/w500/$posterPath';
     }
   }
+
+  getBrackgroundImage() {
+
+    if ( posterPath == null) {
+      return 'https://cdn4.iconfinder.com/data/icons/ui-beast-4/32/Ui-12-512.png';
+    } else {
+    return 'https://image.tmdb.org/t/p/w500/$backdropPath';
+    }
+  }
 }
