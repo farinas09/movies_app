@@ -25,7 +25,7 @@ class MovieHorizontal extends StatelessWidget {
     });
 
     return Container(
-      height: _screenSize.height*0.25,
+      height: _screenSize.height*0.28,
       //para crear bajo demanda
       child: PageView.builder(
         pageSnapping: false,
@@ -45,6 +45,8 @@ class MovieHorizontal extends StatelessWidget {
         margin: EdgeInsets.only(right: 15.0),
         child: Column(
           children: <Widget>[
+            //hero animator uses unique id and makes animation
+            //between activities 
             Hero(
               tag: movie.uniqueId,
               child: ClipRRect(
