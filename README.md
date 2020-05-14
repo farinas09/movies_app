@@ -1,6 +1,6 @@
 # Movies
 
-A new Flutter project.
+A new Flutter project using The MovieDB API for a flutter example app, using some custom widgets and HTTP request.
 
 ## Getting Started
 
