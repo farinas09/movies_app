@@ -17,6 +17,7 @@ class Movies {
 }
 
 class Movie {
+  String uniqueId;
   double popularity;
   int voteCount;
   bool video;
@@ -33,6 +34,7 @@ class Movie {
   String releaseDate;
 
   Movie({
+    //this.uniqueId,
     this.popularity,
     this.voteCount,
     this.video,

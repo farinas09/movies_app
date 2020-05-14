@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movies/src/models/actor_model.dart';
 import 'package:movies/src/models/movie_model.dart';
+import 'package:movies/src/providers/movie_provider.dart';
 
 class MovieDetailPage extends StatelessWidget {
 
@@ -19,9 +21,7 @@ class MovieDetailPage extends StatelessWidget {
               _description(movie, context),
               _description(movie, context),
               _description(movie, context),
-              _description(movie, context),
-              _description(movie, context),
-              _description(movie, context),
+              _createCasting(movie, context),
             ]
           ))
         ]
@@ -42,6 +42,7 @@ class MovieDetailPage extends StatelessWidget {
         centerTitle: true,
         title: Text(
           movie.title,
+          textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white, fontSize: 16.0),
         ),
         background: FadeInImage(
@@ -60,12 +61,15 @@ class MovieDetailPage extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-              child: Image(
-              image: NetworkImage(movie.getPosterImg()),
-              height: 150.0,
-              ),
+          Hero(
+            tag: movie.uniqueId,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+                child: Image(
+                image: NetworkImage(movie.getPosterImg()),
+                height: 150.0,
+                ),
+            ),
           ),
           SizedBox(width: 20.0),
           Flexible(
@@ -104,6 +108,59 @@ class MovieDetailPage extends StatelessWidget {
       child: Text(
         movie.overview,
         textAlign: TextAlign.justify),
+    );
+  }
+
+  Widget _createCasting(Movie movie, BuildContext context) {
+    final movieProvider = new MoviesProvider();
+    return FutureBuilder(
+      future: movieProvider.getCast(movie.id),
+      builder: (context, AsyncSnapshot<List> snapshot) {
+
+        if ( snapshot.hasData ) {
+          return _createActorsPageWidget( snapshot.data );
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+
+  Widget _createActorsPageWidget(List<Actor> actors) {
+    return SizedBox(
+      height: 200.0,
+      child: PageView.builder(
+        pageSnapping: false,
+        controller: PageController(
+          viewportFraction: 0.3,
+          initialPage: 1
+
+        ),
+        itemCount: actors.length,
+        itemBuilder: (context, i) =>_actorCard(actors[i]),
+      ),
+    );
+  }
+
+  Widget _actorCard( Actor actor ) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: FadeInImage(
+              placeholder: AssetImage('assets/placeholder.png'),
+              image: NetworkImage(actor.getPhoto()),
+              height: 150.0,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Text(
+            actor.name,
+            overflow: TextOverflow.ellipsis,
+          )
+        ],
+      ) 
     );
   }
 }
