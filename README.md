@@ -17,4 +17,4 @@ samples, guidance on mobile development, and a full API reference.
 
 (https://raw.githubusercontent.com/farinas09/movies_app/master/assets/example/mainDetail.gif)
 
-![stack Overflow](http://raw.githubusercontent.com/farinas09/movies_app/master/assets/example/mainDetail.gif)
+![stack Overflow](https://github.com/farinas09/movies_app/blob/master/assets/example/footerDetail.gif)
