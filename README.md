@@ -16,3 +16,5 @@ For help getting started with Flutter, view the
 samples, guidance on mobile development, and a full API reference.
 
 (https://raw.githubusercontent.com/farinas09/movies_app/master/assets/example/mainDetail.gif)
+
+![stack Overflow](http://lmsotfy.com/so.png)
