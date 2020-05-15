@@ -15,4 +15,22 @@ For help getting started with Flutter, view the
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-https://raw.githubusercontent.com/farinas09/movies_app/blob/master/assets/example/heroAnimation.mp4
+### Hero Animation
+
+![Ingresar al detalle desde el footer](https://github.com/farinas09/movies_app/blob/master/assets/example/mainDetail.gif)
+
+
+### Infinite Scroll
+
+![Ingresar al detalle desde el footer](https://github.com/farinas09/movies_app/blob/master/assets/example/horizontalScroll.gif)
+
+
+### Hero Animation from infinite scroll item
+
+![Ingresar al detalle desde el footer](https://github.com/farinas09/movies_app/blob/master/assets/example/footerDetail.gif)
+
+
+### The MovieDB
+
+For more info about The MovieDB API, visit  [the official site](https://developers.themoviedb.org/3/getting-started/introduction)
+
