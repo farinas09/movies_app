@@ -17,20 +17,16 @@ samples, guidance on mobile development, and a full API reference.
 
 ### Hero Animation
 
-![Ingresar al detalle desde el footer](https://github.com/farinas09/movies_app/blob/master/assets/example/mainDetail.gif)
-
+![Ingresar al detalle desde el footer](https://github.com/farinas09/movies_app/blob/master/img/example/mainDetail.gif)
 
 ### Infinite Scroll
 
-![Ingresar al detalle desde el footer](https://github.com/farinas09/movies_app/blob/master/assets/example/horizontalScroll.gif)
-
+![Ingresar al detalle desde el footer](https://github.com/farinas09/movies_app/blob/master/img/example/horizontalScroll.gif)
 
 ### Hero Animation from infinite scroll item
 
-![Ingresar al detalle desde el footer](https://github.com/farinas09/movies_app/blob/master/assets/example/footerDetail.gif)
-
+![Ingresar al detalle desde el footer](https://github.com/farinas09/movies_app/blob/master/img/example/footerDetail.gif)
 
 ### The MovieDB
 
-For more info about The MovieDB API, visit  [the official site](https://developers.themoviedb.org/3/getting-started/introduction)
-
+For more info about The MovieDB API, visit [the official site](https://developers.themoviedb.org/3/getting-started/introduction)

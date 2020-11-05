@@ -10,7 +10,7 @@
 .svn/
 
 #assets
-example/
+img/
 
 # IntelliJ related
 *.iml
