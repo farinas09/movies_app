@@ -9,6 +9,10 @@
 .history
 .svn/
 
+#assets
+
+assets/example
+
 # IntelliJ related
 *.iml
 *.ipr
