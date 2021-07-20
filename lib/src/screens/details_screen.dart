@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies/src/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
   @override
@@ -16,7 +17,7 @@ class DetailsScreen extends StatelessWidget {
             _OverView(),
             _OverView(),
             _OverView(),
-            _OverView(),
+            CastingCards(),
           ]),
         ),
       ],
@@ -34,22 +35,21 @@ class _CustomAppBar extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         titlePadding: const EdgeInsets.all(0),
-        title: Container(
-          alignment: Alignment.bottomCenter,
-          width: double.infinity,
-          color: Colors.black38,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              "movie.title",
-              style: TextStyle(fontSize: 18),
-            ),
+        title: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            "movie.title",
+            style: TextStyle(fontSize: 18),
+            textAlign: TextAlign.center,
           ),
         ),
-        background: FadeInImage(
-          fit: BoxFit.cover,
-          placeholder: AssetImage("assets/loading.gif"),
-          image: NetworkImage('https://via.placeholder.com/300x400'),
+        background: ColorFiltered(
+          colorFilter: ColorFilter.mode(Colors.black38, BlendMode.darken),
+          child: FadeInImage(
+            fit: BoxFit.cover,
+            placeholder: AssetImage("assets/loading.gif"),
+            image: NetworkImage('https://via.placeholder.com/300x400'),
+          ),
         ),
       ),
     );
