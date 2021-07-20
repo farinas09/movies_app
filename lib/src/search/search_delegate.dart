@@ -51,7 +51,7 @@ class MovieSearchDelegate extends SearchDelegate {
       return _emptyContainer();
     }
 
-    final moviesProvider = Provider.of<MoviesProvider>(context, listen: false);
+    final moviesProvider = Provider.of<MoviesProvider>(context);
     moviesProvider.getSuggestionsByQuery(query);
 
     return StreamBuilder(
@@ -60,6 +60,11 @@ class MovieSearchDelegate extends SearchDelegate {
         if (!snapshot.hasData) return _emptyContainer();
 
         final movies = snapshot.data!;
+        if (moviesProvider.isLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
 
         return ListView.builder(
             itemCount: movies.length,
@@ -82,7 +87,7 @@ class _MovieItem extends StatelessWidget {
       leading: Hero(
         tag: movie.heroId!,
         child: FadeInImage(
-          placeholder: AssetImage('assets/no-image.jpg'),
+          placeholder: AssetImage('assets/placeholder.png'),
           image: NetworkImage(movie.fullPosterImg),
           width: 50,
           fit: BoxFit.contain,

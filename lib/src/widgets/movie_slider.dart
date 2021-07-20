@@ -4,13 +4,13 @@ import 'package:movies/src/models/models.dart';
 
 class MovieSlider extends StatefulWidget {
   final List<Movie> movies;
-  final String? title;
+  final String title;
   final Function onNextPage;
 
   const MovieSlider({
     Key? key,
     required this.movies,
-    this.title,
+    this.title = "",
     required this.onNextPage,
   }) : super(key: key);
 
@@ -45,11 +45,11 @@ class _MovieSliderState extends State<MovieSlider> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widget.title != null)
+          if (widget.title != "")
             Padding(
               padding: const EdgeInsets.only(left: 20, bottom: 5, top: 5),
               child: Text(
-                widget.title!,
+                widget.title,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
@@ -58,8 +58,10 @@ class _MovieSliderState extends State<MovieSlider> {
                 controller: _scrollController,
                 scrollDirection: Axis.horizontal,
                 itemCount: widget.movies.length,
-                itemBuilder: (_, int index) =>
-                    _MoviePoster(movie: widget.movies[index])),
+                itemBuilder: (_, int index) => _MoviePoster(
+                    movie: widget.movies[index],
+                    heroId:
+                        '${widget.title}-$index-${widget.movies[index].id}')),
           )
         ],
       ),
@@ -69,10 +71,13 @@ class _MovieSliderState extends State<MovieSlider> {
 
 class _MoviePoster extends StatelessWidget {
   final Movie movie;
+  final String heroId;
 
-  const _MoviePoster({Key? key, required this.movie}) : super(key: key);
+  const _MoviePoster({Key? key, required this.movie, required this.heroId})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
+    movie.heroId = heroId;
     return Container(
       width: 130,
       height: 190,
@@ -82,14 +87,17 @@ class _MoviePoster extends StatelessWidget {
           GestureDetector(
             onTap: () =>
                 Navigator.pushNamed(context, 'detail', arguments: movie),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: FadeInImage(
-                height: 190,
-                width: 130,
-                fit: BoxFit.cover,
-                placeholder: AssetImage("assets/loading.gif"),
-                image: NetworkImage(movie.fullPosterImg),
+            child: Hero(
+              tag: movie.heroId!,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: FadeInImage(
+                  height: 190,
+                  width: 130,
+                  fit: BoxFit.cover,
+                  placeholder: AssetImage("assets/loading.gif"),
+                  image: NetworkImage(movie.fullPosterImg),
+                ),
               ),
             ),
           ),

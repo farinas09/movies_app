@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:movies/env.dart';
+import 'package:movies/src/helpers/debouncer.dart';
 import 'package:movies/src/models/models.dart';
 
 class MoviesProvider with ChangeNotifier {
@@ -12,8 +15,20 @@ class MoviesProvider with ChangeNotifier {
   List<Movie> popularMovies = [];
 
   int _popularsPage = 0;
+  bool isLoading = false;
 
   Map<int, List<Cast>> moviesCast = {};
+
+  final debouncer = Debouncer(
+    duration: Duration(milliseconds: 500),
+  );
+
+  // ignore: close_sinks
+  final StreamController<List<Movie>> _suggestionStreamContoller =
+      StreamController.broadcast();
+
+  Stream<List<Movie>> get suggestionStream =>
+      this._suggestionStreamContoller.stream;
 
   MoviesProvider() {
     getOnDisplayMovies();
@@ -55,27 +70,33 @@ class MoviesProvider with ChangeNotifier {
   }
 
   Future<List<Movie>> searchMovies(String query) async {
+    print("search");
     final url = Uri.https(_baseUrl, '3/search/movie',
         {'api_key': _apiKey, 'language': _language, 'query': query});
 
     final response = await http.get(url);
     final searchResponse = SearchResponse.fromJson(response.body);
-
     return searchResponse.results;
   }
 
   void getSuggestionsByQuery(String searchTerm) {
-    debouncer.value = '';
-    debouncer.onValue = (value) async {
-      // print('Tenemos valor a buscar: $value');
-      final results = await this.searchMovies(value);
-      this._suggestionStreamContoller.add(results);
-    };
+    if (searchTerm != debouncer.value) {
+      debouncer.value = '';
+      debouncer.onValue = (value) async {
+        final results = await this.searchMovies(value);
+        isLoading = false;
+        this._suggestionStreamContoller.add(results);
+        notifyListeners();
+      };
 
-    final timer = Timer.periodic(Duration(milliseconds: 300), (_) {
-      debouncer.value = searchTerm;
-    });
+      final timer = Timer.periodic(Duration(milliseconds: 200), (_) {
+        debouncer.value = searchTerm;
+        isLoading = true;
+      });
 
-    Future.delayed(Duration(milliseconds: 301)).then((_) => timer.cancel());
+      Future.delayed(Duration(milliseconds: 201)).then((_) {
+        timer.cancel();
+      });
+    }
   }
 }
