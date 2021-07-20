@@ -1,40 +1,45 @@
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:movies/env.dart';
 import 'package:movies/src/models/models.dart';
 
 class MoviesProvider with ChangeNotifier {
-  String _apiKey = '8e746ff58bd44f7d363277326269e6d6';
-  String _baseUrl = 'api.themoviedb.org';
+  String _apiKey = Env.APIKEY;
+  String _baseUrl = Env.BASE_URL;
   String _language = 'es-ES';
 
   List<Movie> onDisplayMovies = [];
   List<Movie> popularMovies = [];
+
+  int _popularsPage = 0;
 
   MoviesProvider() {
     getOnDisplayMovies();
     getPopularMovies();
   }
 
-  getOnDisplayMovies() async {
+  Future<String> _getJsonData({required String path, int page = 1}) async {
     final url = Uri.https(
       _baseUrl,
-      '3/movie/now_playing',
-      {'api_key': _apiKey, 'language': _language, 'page': '1'},
+      path,
+      {'api_key': _apiKey, 'language': _language, 'page': '$page'},
     );
     final response = await http.get(url);
-    final moviesRes = NowPlayingResponse.fromJson(response.body);
+    return response.body;
+  }
+
+  getOnDisplayMovies() async {
+    final res = await _getJsonData(path: '3/movie/now_playing');
+    final moviesRes = NowPlayingResponse.fromJson(res);
     onDisplayMovies = moviesRes.results;
     notifyListeners();
   }
 
   getPopularMovies() async {
-    final url = Uri.https(
-      _baseUrl,
-      '3/movie/popular',
-      {'api_key': _apiKey, 'language': _language, 'page': '1'},
-    );
-    final response = await http.get(url);
-    final moviesRes = PopularResponse.fromJson(response.body);
+    _popularsPage++;
+    final res =
+        await _getJsonData(path: '3/movie/popular', page: _popularsPage);
+    final moviesRes = PopularResponse.fromJson(res);
     popularMovies = [...popularMovies, ...moviesRes.results];
     notifyListeners();
   }
