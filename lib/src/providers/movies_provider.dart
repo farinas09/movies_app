@@ -53,6 +53,7 @@ class MoviesProvider with ChangeNotifier {
   }
 
   getPopularMovies() async {
+    
     _popularsPage++;
     final res =
         await _getJsonData(path: '3/movie/popular', page: _popularsPage);
