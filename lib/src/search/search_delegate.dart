@@ -30,7 +30,6 @@ class MovieSearchDelegate extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     return Container();
-    // builder to create the results
   }
 
   Widget _emptyContainer() {
