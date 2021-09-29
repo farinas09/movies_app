@@ -12,9 +12,9 @@ class Debouncer<T> {
   T? _value;
   Timer? _timer;
 
-  T get value => _value!;
+  T? get value => _value;
 
-  set value(T val) {
+  set value(T? val) {
     _value = val;
     _timer?.cancel();
     _timer = Timer(duration, () => onValue!(_value!));
